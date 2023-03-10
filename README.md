@@ -1,35 +1,8 @@
-# PHP-I18N
-
-**Internationalization and localization for PHP**
-
-Provide your application in multiple languages, to users in various countries, with different formats and conventions.
-
-## Requirements
-
- * PHP 5.6.0+
-   * GNU gettext extension (`gettext`)
-   * Internationalization extension (`intl`)
-
-**Note:** On Windows, you may have to use the non-thread-safe (NTS) version of PHP.
-
-## Installation
-
- 1. Include the library via Composer [[?]](https://github.com/Devinow-im/Knowledge/blob/master/Composer%20(PHP).md):
-
-    ```bash
-    $ composer require Devinow-im/i18n
-    ```
-
- 1. Include the Composer autoloader:
-
-    ```php
-    require __DIR__ . '/vendor/autoload.php';
-    ```
-
-## Usage
-
- * [What is a locale?](#what-is-a-locale)
- * [Decide on your initial set of supported locales](#decide-on-your-initial-set-of-supported-locales)
+# Installation
+```
+composer require devinow/i18n
+```
+# Usage
  * [Creating a new instance](#creating-a-new-instance)
  * [Directory and file names for translation files](#directory-and-file-names-for-translation-files)
  * [Activating the correct locale for the user](#activating-the-correct-locale-for-the-user)
@@ -66,34 +39,6 @@ Provide your application in multiple languages, to users in various countries, w
    * [Script codes](#script-codes)
    * [Region codes](#region-codes)
    * [Directionality of text](#directionality-of-text)
- * [Controlling the leniency for lookups and comparisons of locales](#controlling-the-leniency-for-lookups-and-comparisons-of-locales)
-
-### What is a locale?
-
-Put simply, a locale is a set of user preferences and expectations, shared across larger communities in the world, and varying by geographic region. Notably, this includes a user’s language and their expectation of how numbers, dates and times are to be formatted.
-
-### Decide on your initial set of supported locales
-
-Whatever set of languages, scripts and regions you decide to support at the beginning, you will be able to add or remove locales at any later time. So perhaps you might like to start with just 1–3 locales to get started faster.
-
-You can find a list of various locale codes in the [`Codes`](src/Codes.php) class and use the corresponding constants to refer to the locales, which is the recommended solution. Alternatively, you may copy their string values, which use a subset of IETF BCP 47 (RFC 5646) or Unicode CLDR identifiers.
-
-Prior to using your initial set of languages, you should ensure they’re installed on any machine you’d like to develop or deploy your application on, making sure they are known to the operating system:
-
-```bash
-$ locale -a
-```
-
-If a certain locale is not installed yet, you can add it like the `es-AR` locale in the following example:
-
-```bash
-$ sudo locale-gen es_AR
-$ sudo locale-gen es_AR.UTF-8
-$ sudo update-locale
-$ sudo service apache2 restart
-```
-
-**Note:** On Unix-like operating systems, the locale codes used during installation must use underscores.
 
 ### Creating a new instance
 
@@ -825,33 +770,3 @@ $i18n->getNativeLanguageName('fr-BE');
 \Devinow\I18n\Locale::isLtr('ln-CD');
 // true
 ```
-
-### Controlling the leniency for lookups and comparisons of locales
-
-When using `I18n#setLocaleAutomatically` to determine and activate the correct locale for the user automatically, you can control which locales to consider similar or related. Thus you can control the way lookups and comparisons of locales work.
-
-If the default behavior doesn’t work for you, simply provide the optional first argument, called `$leniency`, to `I18n#setLocaleAutomatically`. The following table lists the minimum leniency value that is required to match the two locale codes in question:
-
-|                            | `sr`                       | `sr-RS`                    | `sr-BA`                    | `sr-Cyrl`                  | `sr-Latn`                  | `sr-Cyrl-RS`               | `sr-Cyrl-BA`               | `sr-Latn-RS`               | `sr-Latn-BA`               |
-| :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: | :------------------------: |
-| `sr`                       | `Leniency::NONE`           | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_LOW`  | `Leniency::LOW`            | `Leniency::LOW`            | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::MODERATE`       |
-| `sr_RS`                    | `Leniency::EXTREMELY_LOW`  | `Leniency::NONE`           | `Leniency::VERY_LOW`       | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::LOW`            | `Leniency::HIGH`           | `Leniency::LOW`            | `Leniency::HIGH`           |
-| `sr_BA`                    | `Leniency::EXTREMELY_LOW`  | `Leniency::VERY_LOW`       | `Leniency::NONE`           | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::HIGH`           | `Leniency::LOW`            | `Leniency::HIGH`           | `Leniency::LOW`            |
-| `sr_Cyrl`                  | `Leniency::LOW`            | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::NONE`           | `Leniency::VERY_HIGH`      | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_HIGH` | `Leniency::EXTREMELY_HIGH` |
-| `sr_Latn`                  | `Leniency::LOW`            | `Leniency::MODERATE`       | `Leniency::MODERATE`       | `Leniency::VERY_HIGH`      | `Leniency::NONE`           | `Leniency::EXTREMELY_HIGH` | `Leniency::EXTREMELY_HIGH` | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_LOW`  |
-| `sr_Cyrl_RS`               | `Leniency::MODERATE`       | `Leniency::LOW`            | `Leniency::HIGH`           | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_HIGH` | `Leniency::NONE`           | `Leniency::VERY_LOW`       | `Leniency::VERY_HIGH`      | `Leniency::FULL`           |
-| `sr_Cyrl_BA`               | `Leniency::MODERATE`       | `Leniency::HIGH`           | `Leniency::LOW`            | `Leniency::EXTREMELY_LOW`  | `Leniency::EXTREMELY_HIGH` | `Leniency::VERY_LOW`       | `Leniency::NONE`           | `Leniency::FULL`           | `Leniency::VERY_HIGH`      |
-| `sr_Latn_RS`               | `Leniency::MODERATE`       | `Leniency::LOW`            | `Leniency::HIGH`           | `Leniency::EXTREMELY_HIGH` | `Leniency::EXTREMELY_LOW`  | `Leniency::VERY_HIGH`      | `Leniency::FULL`           | `Leniency::NONE`           | `Leniency::VERY_LOW`       |
-| `sr_Latn_BA`               | `Leniency::MODERATE`       | `Leniency::HIGH`           | `Leniency::LOW`            | `Leniency::EXTREMELY_HIGH` | `Leniency::EXTREMELY_LOW`  | `Leniency::FULL`           | `Leniency::VERY_HIGH`      | `Leniency::VERY_LOW`       | `Leniency::NONE`           |
-
-## Troubleshooting
-
- * Translations are usually cached, so it may be necessary to restart the web server for any changes to take effect.
-
-## Contributing
-
-All contributions are welcome! If you wish to contribute, please create an issue first so that your feature, problem or question can be discussed.
-
-## License
-
-This project is licensed under the terms of the [MIT License](https://opensource.org/licenses/MIT).

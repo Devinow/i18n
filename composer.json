@@ -6,7 +6,7 @@
 	"keywords": [ "internationalization", "localization", "translation", "language", "locale", "gettext", "intl", "i18n", "l10n" ],
 	"require": {
 	  "php": ">=8.1.0",
-      "ext-gettext": "*",
+      	  "ext-gettext": "*",
 	  "ext-intl": "*"
 	},
 	"authors": [

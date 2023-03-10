@@ -1,0 +1,39 @@
+{
+	"name": "devinow/i18n",
+	"description": "Devinow Framework I18N Library,Internationalization and localization for PHP.",
+	"type": "library",
+	"license": "MIT",
+	"keywords": [ "internationalization", "localization", "translation", "language", "locale", "gettext", "intl", "i18n", "l10n" ],
+	"require": {
+	  "php": ">=8.1.0",
+      "ext-gettext": "*",
+	  "ext-intl": "*"
+	},
+	"authors": [
+	  {
+		"name": "Devinow",
+		"email": "info@devinow.xyz",
+		"homepage": "https://devinow.xyz",
+		"role": "Developer"
+	  }
+	],
+	"repositories": [
+	  {
+		  "type": "vcs",
+		  "url": "https://github.com/devinow/i18n"
+	  }
+	],
+	"support": {
+		  "email": "info@devinow.xyz"
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true,
+	"autoload": {
+	  "psr-4": {
+		"Devinow\\I18n\\": "/"
+	  },
+	  "files": [
+		"loader.php"
+	  ]
+	}
+}
